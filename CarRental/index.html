@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="box">
+      <h2><strong>ACME Car Rental</strong></h2>
+      <br />
+      <label for="pickupDate">Pickup Date:</label>
+      <input type="date" value="" id="pickupDate" /><br /><br />
+      <label for="numOfDays">Number of days:</label>
+      <input type="number" value="" id="numOfDays" /> <br />
+      <h3>Options</h3>
+      <input
+        type="checkbox"
+        class="disableAtStart"
+        id="eToll"
+        name="eToll"
+        value="option1"
+      />
+      Electronic Toll Tag ($3.95/day)<br />
+      <input
+        type="checkbox"
+        class="disableAtStart"
+        id="GPS"
+        name="GPS"
+        value="option2"
+      />
+      GPS ($2.95/day)
+      <br />
+      <input
+        type="checkbox"
+        class="disableAtStart"
+        id="roadside"
+        name="roadside"
+        value="option3"
+      />
+      Roadside Assistance ($2.95/day)<br />
+
+      <h3>Under 25?</h3>
+
+      <input
+        type="radio"
+        class="disableAtStart"
+        name="age"
+        id="yesRadioBtn"
+        value="yesRadioBtn"
+        checked
+      />
+      Yes<br />
+      <input
+        type="radio"
+        class="disableAtStart"
+        name="age"
+        id="noRadioBtn"
+        value="noRadioBtn"
+      />
+      No<br />
+      <hr />
+
+      <input type="button" value="Estimate Total Cost" id="costBtn" />
+      <br /><br />
+
+      <table>
+        <tr>
+          <td>Car Rental:</td>
+          <td id="carRentalBaseCost">XXX XXX</td>
+        </tr>
+        <tr>
+          <td>Options:</td>
+          <td id="optionsCost">XX XX</td>
+        </tr>
+        <tr id="surchargeRow">
+          <td>Under 25 Surcharge:</td>
+          <td id="ageSurcharge">XX XX</td>
+        </tr>
+        <tr>
+            <td>Total Due:</td>
+            <td id="totalRentalCost">XX XX</td>
+          </tr>
+        </table>
+      </div>
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"
+      ></script>
+      <script src="./scripts/scripts.js"></script>
+      </body>
+      </html>
