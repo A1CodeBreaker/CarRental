@@ -1,58 +1,49 @@
-// wait for the DOM to finish loading
-document.addEventListener("DOMContentLoaded", function () {
-    // get references to form elements
-    var pickupDateInput = document.getElementById("pickupDate");
-    var numOfDaysInput = document.getElementById("numOfDays");
-    var eTollCheckbox = document.getElementById("eToll");
-    var gpsCheckbox = document.getElementById("GPS");
-    var roadsideCheckbox = document.getElementById("roadside");
-    var yesRadioBtn = document.getElementById("yesRadioBtn");
-    var noRadioBtn = document.getElementById("noRadioBtn");
-    var costBtn = document.getElementById("costBtn");
-    var carRentalBaseCostEl = document.getElementById("carRentalBaseCost");
-    var optionsCostEl = document.getElementById("optionsCost");
-    var ageSurchargeEl = document.getElementById("ageSurcharge");
-    var totalRentalCostEl = document.getElementById("totalRentalCost");
-  
-    // set up event listener for cost button
-    costBtn.addEventListener("click", function () {
-      // get the selected options and input values
-      var pickupDate = new Date(pickupDateInput.value);
-      var numOfDays = Number(numOfDaysInput.value);
-      var eToll = eTollCheckbox.checked;
-      var gps = gpsCheckbox.checked;
-      var roadside = roadsideCheckbox.checked;
-      var ageUnder25 = yesRadioBtn.checked;
-  
-      // calculate base rental cost
-      var baseCostPerDay = 50;
-      var baseRentalCost = numOfDays * baseCostPerDay;
-  
-      // calculate options cost
-      var optionsCost = 0;
-      if (eToll) {
-        optionsCost += 3.95 * numOfDays;
-      }
-      if (gps) {
-        optionsCost += 2.95 * numOfDays;
-      }
-      if (roadside) {
-        optionsCost += 2.95 * numOfDays;
-      }
-  
-      // calculate under 25 surcharge
-      var ageSurcharge = 0;
-      if (ageUnder25) {
-        ageSurcharge = 10 * numOfDays;
-      }
-  
-      // calculate total rental cost
-      var totalRentalCost = baseRentalCost + optionsCost + ageSurcharge;
-  
-      // update the table with the calculated costs
-      carRentalBaseCostEl.innerHTML = baseRentalCost.toFixed(2);
-      optionsCostEl.innerHTML = optionsCost.toFixed(2);
-      ageSurchargeEl.innerHTML = ageSurcharge.toFixed(2);
-      totalRentalCostEl.innerHTML = totalRentalCost.toFixed(2);
-    });
-  });
+"use strict";
+
+// Get the elements needed
+const rentDaysInput = document.getElementById("rentDays");
+const optionsInputs = document.querySelectorAll("input[type='checkbox']");
+const rentAgeInputs = document.querySelectorAll("input[name='rentAge']");
+const totalCostBtn = document.getElementById("totalCostBtn");
+const carRentalEl = document.getElementById("carRental");
+const optChoiceEl = document.getElementById("optChoice");
+const areYou25El = document.getElementById("areYou25");
+const dueAmountEl = document.getElementById("dueAmount");
+
+// Define the costs of the rental options
+const rentalOptionPrices = {
+  tollTag: 3.95,
+  gps: 2.95,
+  roadsideHelp: 2.95,
+};
+
+// Define the age surcharges
+const ageSurcharges = {
+  under25: 0,
+  over25: 0.3,
+};
+
+// Set the click event handler for the button
+totalCostBtn.addEventListener("click", calculateTotalCost);
+
+// Define the function to calculate the total cost
+function calculateTotalCost() {
+  // Get the input values
+  const rentDays = parseInt(rentDaysInput.value);
+  const selectedOptions = [...optionsInputs].filter(input => input.checked);
+  const selectedRentAge = [...rentAgeInputs].find(input => input.checked);
+
+  // Calculate the costs
+  const basicRentalCost = rentDays * 29.99;
+  const optionsCost = selectedOptions.reduce((total, option) => {
+    return total + rentalOptionPrices[option.id] * rentDays;
+  }, 0);
+  const ageSurcharge = ageSurcharges[selectedRentAge.id] * basicRentalCost;
+  const totalCost = basicRentalCost + optionsCost + ageSurcharge;
+
+  // Update the HTML elements
+  carRentalEl.textContent = `Car Rental: $${basicRentalCost.toFixed(2)}`;
+  optChoiceEl.textContent = `Options: $${optionsCost.toFixed(2)}`;
+  areYou25El.textContent = `Under 25 surcharge: $${ageSurcharge.toFixed(2)}`;
+  dueAmountEl.textContent = `Total due: $${totalCost.toFixed(2)}`;
+}
